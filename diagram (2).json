@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "author": "Smart Fire & Gas Safety System",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 172.8, "left": 504.04, "attrs": {} },
+    {
+      "type": "wokwi-gas-sensor",
+      "id": "mq2",
+      "top": 31.5,
+      "left": -21.8,
+      "attrs": { "ppm": "400", "threshold": "4.4" }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "smokePot",
+      "top": 280,
+      "left": 45,
+      "attrs": { "value": "0" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "flame",
+      "top": 495.8,
+      "left": 86.4,
+      "attrs": { "color": "orange", "label": "FLAME / FIRE", "key": "F", "bounce": "0" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "resetButton",
+      "top": 500,
+      "left": 800,
+      "attrs": { "color": "blue", "label": "SILENCE ALARM", "key": "R", "bounce": "0" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled",
+      "top": 175.94,
+      "left": 269.03,
+      "attrs": { "i2cAddress": "0x3c" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "buzzer",
+      "top": 55,
+      "left": 940,
+      "attrs": { "volume": "0.18", "mode": "smooth" }
+    },
+    {
+      "type": "wokwi-rgb-led",
+      "id": "statusLed",
+      "top": 285,
+      "left": 940,
+      "attrs": { "common": "cathode" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rRed",
+      "top": 240,
+      "left": 835,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rGreen",
+      "top": 285,
+      "left": 835,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rBlue",
+      "top": 330,
+      "left": 835,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rExhaust",
+      "top": 465,
+      "left": 1080,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "exhaustLed",
+      "top": 447.6,
+      "left": 1165.4,
+      "attrs": { "color": "blue", "label": "EXHAUST / FAN ON" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "title",
+      "top": 19.2,
+      "left": 518.4,
+      "attrs": { "text": "SMART FIRE & GAS SAFETY SYSTEM" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "sensorLabel",
+      "top": 182.4,
+      "left": 28.8,
+      "attrs": { "text": "INPUT SENSORS" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "statusLabel",
+      "top": 211.2,
+      "left": 979.2,
+      "attrs": { "text": "STATUS\nGREEN = SAFE\nYELLOW = WARNING\nRED = DANGER" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "actuatorLabel",
+      "top": 537.6,
+      "left": 940.8,
+      "attrs": { "text": "AUTO EXHAUST INDICATOR\n(GPIO4 -> replace LED with relay on hardware)" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "mq2:VCC", "esp:5V", "red", [ "v8.7", "h393.45" ] ],
+    [ "mq2:GND", "esp:GND.1", "black", [] ],
+    [ "mq2:AOUT", "esp:34", "orange", [] ],
+    [ "smokePot:VCC", "esp:3V3", "red", [] ],
+    [ "smokePot:GND", "esp:GND.1", "black", [] ],
+    [ "smokePot:SIG", "esp:33", "green", [] ],
+    [ "flame:1.r", "esp:32", "orange", [] ],
+    [ "flame:2.r", "esp:GND.1", "black", [] ],
+    [ "resetButton:1.l", "esp:13", "blue", [] ],
+    [ "resetButton:2.l", "esp:GND.1", "black", [] ],
+    [ "oled:VCC", "esp:3V3", "red", [] ],
+    [ "oled:GND", "esp:GND.1", "black", [] ],
+    [ "oled:SDA", "esp:21", "green", [] ],
+    [ "oled:SCL", "esp:22", "yellow", [] ],
+    [ "buzzer:2", "esp:25", "purple", [] ],
+    [ "buzzer:1", "esp:GND.1", "black", [] ],
+    [ "esp:14", "rRed:1", "red", [] ],
+    [ "rRed:2", "statusLed:R", "red", [] ],
+    [ "esp:27", "rGreen:1", "green", [] ],
+    [ "rGreen:2", "statusLed:G", "green", [] ],
+    [ "esp:26", "rBlue:1", "blue", [] ],
+    [ "rBlue:2", "statusLed:B", "blue", [] ],
+    [ "statusLed:COM", "esp:GND.1", "black", [] ],
+    [ "esp:4", "rExhaust:1", "blue", [] ],
+    [ "rExhaust:2", "exhaustLed:A", "blue", [] ],
+    [ "exhaustLed:C", "esp:GND.1", "black", [] ]
+  ],
+  "serialMonitor": { "display": "auto", "newline": "lf" },
+  "dependencies": {}
+}
